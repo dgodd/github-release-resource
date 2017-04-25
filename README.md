@@ -39,6 +39,9 @@ Fetches and creates versioned GitHub resources.
   will be detected and published. Note that releases must have semver compliant
   tags to be detected, even if they're drafts.
 
+* `filter_tag_prefix`: *Optional.* If given, will filter to only those releases with a tag
+  starting with the desired filter.
+
 ### Example
 
 ``` yaml
