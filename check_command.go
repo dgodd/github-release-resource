@@ -3,6 +3,7 @@ package resource
 import (
 	"sort"
 	"strconv"
+	"strings"
 
 	"github.com/google/go-github/github"
 
@@ -43,9 +44,10 @@ func (c *CheckCommand) Run(request CheckRequest) ([]Version, error) {
 			continue
 		}
 
-		if release.TagName == nil {
+		if release.TagName == nil || !strings.HasPrefix(*release.TagName, request.Source.FilterTagPrefix) {
 			continue
 		}
+
 		if _, err := version.NewVersionFromString(determineVersionFromTag(*release.TagName)); err != nil {
 			continue
 		}

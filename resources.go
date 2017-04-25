@@ -13,6 +13,7 @@ type Source struct {
 	Drafts           bool   `json:"drafts"`
 	PreRelease       bool   `json:"pre_release"`
 	Release          bool   `json:"release"`
+	FilterTagPrefix  string `json:"filter_tag_prefix"`
 }
 
 type CheckRequest struct {

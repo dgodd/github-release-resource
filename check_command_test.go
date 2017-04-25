@@ -432,5 +432,30 @@ var _ = Describe("Check Command", func() {
 				})
 			})
 		})
+
+		Context("and FilterTagPrefix is set", func() {
+			BeforeEach(func() {
+				returnedReleases = []*github.RepositoryRelease{
+					newRepositoryRelease(1, "v4.3.9"),
+					newRepositoryRelease(2, "v3.2.1"),
+					newRepositoryRelease(3, "v3.1.8"),
+				}
+
+			})
+
+			It("returns all of the versions that are newer, and are release and prerealse", func() {
+				command := resource.NewCheckCommand(githubClient)
+
+				response, err := command.Run(resource.CheckRequest{
+					Version: resource.Version{Tag: "0.4.0"},
+					Source:  resource.Source{FilterTagPrefix: "v3."},
+				})
+				Ω(err).ShouldNot(HaveOccurred())
+
+				Ω(response).Should(Equal([]resource.Version{
+					{Tag: "v3.2.1"},
+				}))
+			})
+		})
 	})
 })
